@@ -53,47 +53,52 @@ public class GoogleStepDefs {
 			searchResultElement.verifyPresent(result);
 		}
 	}
-	
+
 	@Given("^I am on Neoload submission$")
 	public void iAmOnNeoloadSubmission() throws Throwable {
 
 		QAFExtendedWebElement reports = new QAFExtendedWebElement("nl.reports");
 		QAFExtendedWebElement submit = new QAFExtendedWebElement("nl.submit");
+		
+		//Both startTransaction & stopTransaction are activated only when neoload=true 
+		NLDriver.startTransaction("home_Perfecto");
+		//replace all your driver.get() to NLDriver.getDriver().get()
+		NLDriver.getDriver().get("http://ushahidi.demo.neotys.com/");
+		NLDriver.stopTransaction();
 
+		NLDriver.startTransaction("reports_Perfecto");
+		//if condition to differentiate usage of QAFExtendedWebElement functions across load testing flow without custom waits/ quantum testing
 		if(NLDriver.isNeoLoadEnabled()) {
-			NLDriver.startTransaction("home_Perfecto");
-			NLDriver.getDriver().get("http://ushahidi.demo.neotys.com/");
-			NLDriver.stopTransaction();
-
-			NLDriver.startTransaction("reports_Perfecto");
+			//You can replace existing QAFExtendedWebElement click with the below format to work seamless across load/non-load/ put them in a if condition as well
 			NLDriver.getDriver().findElement(By.xpath(NLDriver.getLocator(reports))).click();
-			NLDriver.stopTransaction();
-
-			NLDriver.startTransaction("submit_Perfecto");
-			NLDriver.getDriver().findElement(By.partialLinkText(NLDriver.getLocator(submit))).click();
-			NLDriver.stopTransaction();	
-		}else {
-			NLDriver.getDriver().get("http://ushahidi.demo.neotys.com/");
+		}else { 
 			reports.waitForVisible(5000);
 			reports.click();
-			submit.waitForVisible(5000);
-			submit.click();
 		}
+		NLDriver.stopTransaction();
+
+		//The following commands works with or without neoload enablement
+		NLDriver.startTransaction("submit_Perfecto");
+		NLDriver.getDriver().findElement(By.partialLinkText(NLDriver.getLocator(submit))).click();
+		NLDriver.stopTransaction();
+		
+		//The following command will not be captured in neoload, it will not throw an exception when neoload is enabled but will perform a click on reports.
+		reports.click();
 	}
 
 	@Given("^I am on Neo Alerts$")
 	public void I_am_on_Neoload() throws Throwable {
+
+		QAFExtendedWebElement reports = new QAFExtendedWebElement("nl.reports");
+		QAFExtendedWebElement alerts = new QAFExtendedWebElement("nl.alerts");
+
 		NLDriver.startTransaction("launch");
 		NLDriver.getDriver().get("http://ushahidi.demo.neotys.com/");
 		NLDriver.stopTransaction();
-		QAFExtendedWebElement reports = new QAFExtendedWebElement("nl.reports");
 		reports.waitForEnabled(5000);
 
-		if(NLDriver.isNeoLoadEnabled()) {
-			NLDriver.startTransaction("alerts_Perfecto");
-			QAFExtendedWebElement alerts = new QAFExtendedWebElement("nl.alerts");
-			NLDriver.getDriver().findElement(By.partialLinkText(NLDriver.getLocator(alerts))).click();
-			NLDriver.stopTransaction();
-		}
+		NLDriver.startTransaction("alerts_Perfecto");
+		NLDriver.getDriver().findElement(By.partialLinkText(NLDriver.getLocator(alerts))).click();
+		NLDriver.stopTransaction();
 	}
 }

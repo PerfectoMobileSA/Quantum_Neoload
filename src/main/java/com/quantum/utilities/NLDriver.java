@@ -28,7 +28,7 @@ public class NLDriver {
 	 * @param description
 	 */
 	public static void startTransaction(String desc) {
-		if(ConfigurationManager.getBundle().getString("neoload", "false").equalsIgnoreCase("true")) {
+		if(isNeoLoadEnabled()) {
 			String platform = ConfigurationManager.getBundle().getString("perfecto.capabilities.platformName");
 			((NLWebDriver) getDriver()).startTransaction(platform + "_" + desc);
 		}	
@@ -39,7 +39,7 @@ public class NLDriver {
 	 * 
 	 */
 	public static void stopTransaction() {
-		if(ConfigurationManager.getBundle().getString("neoload", "false").equalsIgnoreCase("true")) {
+		if(isNeoLoadEnabled()) {
 			((NLWebDriver) getDriver()).stopTransaction();
 		}	
 	}
@@ -71,5 +71,4 @@ public class NLDriver {
 			return false;
 		}
 	}
-
 }
