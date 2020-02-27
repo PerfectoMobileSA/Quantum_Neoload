@@ -16,12 +16,11 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 @QAFTestStepProvider
-public class GoogleStepDefs extends NLDriver{
+public class GoogleStepDefs {
 	@Given("^I am on Google Search Page$")
 	public void I_am_on_Google_Search_Page() throws Throwable {
 		new WebDriverTestBase().getDriver().get("http://www.google.com/");
 	}
-
 
 	@When("^I search for \"([^\"]*)\"$")
 	public void I_search_for(String searchKey) throws Throwable {
@@ -57,24 +56,44 @@ public class GoogleStepDefs extends NLDriver{
 	
 	@Given("^I am on Neoload submission$")
 	public void iAmOnNeoloadSubmission() throws Throwable {
-		NLDriver.startTransaction(platform + "_home_Perfecto");
-		driver.get("http://ushahidi.demo.neotys.com/");
-		NLDriver.stopTransaction();
-		NLDriver.startTransaction(platform + "_reports_Perfecto");
-		driver.findElement(By.xpath("//div[@id='mainmenu']//a[contains(text(),'Reports')]")).click();
-		NLDriver.stopTransaction();
-		NLDriver.startTransaction(platform + "_submit_Perfecto");
-		driver.findElement(By.partialLinkText("SUBMIT")).click();
-		NLDriver.stopTransaction();	
+
+		QAFExtendedWebElement reports = new QAFExtendedWebElement("nl.reports");
+		QAFExtendedWebElement submit = new QAFExtendedWebElement("nl.submit");
+
+		if(NLDriver.isNeoLoadEnabled()) {
+			NLDriver.startTransaction("home_Perfecto");
+			NLDriver.getDriver().get("http://ushahidi.demo.neotys.com/");
+			NLDriver.stopTransaction();
+
+			NLDriver.startTransaction("reports_Perfecto");
+			NLDriver.getDriver().findElement(By.xpath(NLDriver.getLocator(reports))).click();
+			NLDriver.stopTransaction();
+
+			NLDriver.startTransaction("submit_Perfecto");
+			NLDriver.getDriver().findElement(By.partialLinkText(NLDriver.getLocator(submit))).click();
+			NLDriver.stopTransaction();	
+		}else {
+			NLDriver.getDriver().get("http://ushahidi.demo.neotys.com/");
+			reports.waitForVisible(5000);
+			reports.click();
+			submit.waitForVisible(5000);
+			submit.click();
+		}
 	}
-	
+
 	@Given("^I am on Neo Alerts$")
 	public void I_am_on_Neoload() throws Throwable {
-		NLDriver.startTransaction(platform + "_home2_Perfecto");
-		driver.get("http://ushahidi.demo.neotys.com/");
+		NLDriver.startTransaction("launch");
+		NLDriver.getDriver().get("http://ushahidi.demo.neotys.com/");
 		NLDriver.stopTransaction();
-		NLDriver.startTransaction(platform + "_alerts_Perfecto");
-		driver.findElement(By.partialLinkText("GET ALERTS")).click();
-		NLDriver.stopTransaction();
+		QAFExtendedWebElement reports = new QAFExtendedWebElement("nl.reports");
+		reports.waitForEnabled(5000);
+
+		if(NLDriver.isNeoLoadEnabled()) {
+			NLDriver.startTransaction("alerts_Perfecto");
+			QAFExtendedWebElement alerts = new QAFExtendedWebElement("nl.alerts");
+			NLDriver.getDriver().findElement(By.partialLinkText(NLDriver.getLocator(alerts))).click();
+			NLDriver.stopTransaction();
+		}
 	}
 }

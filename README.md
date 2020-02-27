@@ -144,10 +144,6 @@ Configuration of the [application properties](https://github.com/Project-Quantum
 
 :information_source: The [Perfecto plugin](https://www.perfectomobile.com/ni/resources/downloads/add-ins-plugins-and-extensions) enables access to real devices and desktop Web sessions in the CQ Lab, as well as easy-to-use [Object Spy](https://community.perfectomobile.com/series/18628) for mapping the application objects in the [Object Repository](https://github.com/Project-Quantum/Quantum-Starter-Kit/wiki/Object%20Repository).
 
-## NeoLoad
-
-Documentation will be updated in Developers perfecto portal.  
-
 **********************
 # Project Directory Structure
 ```

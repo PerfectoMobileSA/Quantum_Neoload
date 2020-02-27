@@ -9,14 +9,12 @@
 
 	<properties>
 		<testngXmlDir>src/main/resources/config</testngXmlDir>
-		<testngXmlFile>testng_web_desktop_neoload.xml</testngXmlFile>
+		<testngXmlFile>testng_all.xml</testngXmlFile>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<reportium-sdk.version>2.3</reportium-sdk.version>
 		<testng.version>6.10</testng.version>
 		<cukes.version>1.2.5</cukes.version>
-		<qaf.version>2.1.14</qaf.version>
-		<qafsupport.version>2.1.14</qafsupport.version>
-		<quantum.version>1.20.1</quantum.version>
+		<quantum.version>1.21</quantum.version>
 		<org.json.version>20160810</org.json.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -78,13 +76,16 @@
 			<id>jai</id>
 			<url>https://repository.jboss.org/nexus/content/repositories/thirdparty-releases</url>
 		</repository> 
-		
-	<repository>
-    	<id>neotys-public-releases</id>
-	    <url>http://maven.neotys.com/content/repositories/releases/</url>
-   		<releases><enabled>true</enabled></releases>
-	    <snapshots><enabled>false</enabled></snapshots>
-	</repository>
+		<repository>
+			<id>neotys-public-releases</id>
+			<url>http://maven.neotys.com/content/repositories/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -129,9 +130,9 @@
 			<version>1.7.7</version>
 		</dependency>
 			<dependency>
-		<groupId>com.neotys.selenium</groupId>
-		<artifactId>neotys-selenium-proxy</artifactId>
-		<version>2.1.0</version>
-	</dependency>
+			<groupId>com.neotys.selenium</groupId>
+			<artifactId>neotys-selenium-proxy</artifactId>
+			<version>2.1.0</version>
+		</dependency>
 	</dependencies>
 </project>

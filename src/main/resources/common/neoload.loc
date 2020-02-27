@@ -1,0 +1,4 @@
+#locator repository for neoload page
+nl.reports = {\"locator\":\"xpath=//div[@id='mainmenu']//a[contains(text(),'Reports')]\",\"desc\":\"reports\"}
+nl.submit = {\"locator\":\"partialLink=SUBMIT\",\"desc\":\"submit\"}
+nl.alerts = {\"locator\":\"partialLink=GET ALERTS\",\"desc\":\"alerts\"}

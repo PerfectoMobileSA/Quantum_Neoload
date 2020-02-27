@@ -10,7 +10,7 @@ Feature: Appium Example Feature
     When add "3" to "5"
     Then result should be "8"
 
-  @appium
+  @appiumb
   Scenario: Appium Example 2
     Given I start application by name "Calculator"
     And I am using an AppiumDriver
