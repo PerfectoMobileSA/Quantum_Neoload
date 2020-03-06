@@ -91,12 +91,16 @@ public class GoogleStepDefs {
 
 		QAFExtendedWebElement reports = new QAFExtendedWebElement("nl.reports");
 		QAFExtendedWebElement alerts = new QAFExtendedWebElement("nl.alerts");
-
+		QAFExtendedWebElement multireports = new QAFExtendedWebElement("nl.multi.reports");
+		
 		NLDriver.startTransaction("launch");
 		NLDriver.getDriver().get("http://ushahidi.demo.neotys.com/");
 		NLDriver.stopTransaction();
+		
 		reports.waitForEnabled(5000);
-
+		NLDriver.getDriver().manage().window().maximize();	
+		NLDriver.getDriver().findElements(By.xpath(NLDriver.getLocator(multireports))).get(1).isDisplayed();
+		
 		NLDriver.startTransaction("alerts_Perfecto");
 		NLDriver.getDriver().findElement(By.partialLinkText(NLDriver.getLocator(alerts))).click();
 		NLDriver.stopTransaction();
