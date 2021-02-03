@@ -51,7 +51,7 @@ public class NLDriver {
 	 */
 	public static String getLocator(QAFExtendedWebElement element) {
 		String matching = "";
-		Pattern pattern = Pattern.compile("\\=.*"); 
+		Pattern pattern = Pattern.compile("(?:\\=|\\:).*");  // previous: "\\=.*"
 		Matcher m = pattern.matcher(element.getMetaData().get("locator").toString()); 
 		while (m.find()) { 
 			matching = m.group(0).substring(1);
